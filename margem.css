@@ -1,0 +1,559 @@
+/* Calculadora de Precificação Shopee · Operação Leve
+   Extende styles.css. Mobile-first, mesma paleta P&B + 4 cores de zona. */
+
+:root {
+  --zone-red:    #e10600; /* vermelho ferrari */
+  --zone-yellow: #ffd400; /* amarelo 100% */
+  --zone-blue:   #0a2a6e; /* azul escuro */
+  --zone-green:  #a8e000; /* verde limão */
+  --surface:     #f7f7f6;
+  --surface-2:   #efefee;
+  --input-border:#d9d9d9;
+  --input-bg:    #ffffff;
+  --danger:      #e10600;
+}
+
+.calc-page {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 24px 18px 100px;
+}
+
+/* --- Header --- */
+
+.back-link {
+  display: inline-block;
+  font-size: 13px;
+  margin-bottom: 18px;
+  text-decoration: none !important;
+  color: var(--ink-muted) !important;
+}
+.back-link:hover { color: var(--ink) !important; }
+
+.calc-hero {
+  padding-bottom: 22px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid var(--rule);
+}
+.calc-hero h1 {
+  font-size: 26px;
+  line-height: 1.2;
+  margin-bottom: 10px;
+}
+.calc-hero .lede {
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+/* --- Zones legend --- */
+
+.zones-legend {
+  margin-bottom: 28px;
+  padding: 20px 18px;
+  background: #fafaf9;
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+}
+.zones-legend h2 {
+  margin: 0 0 4px;
+  font-size: 16px;
+}
+.zones-sub {
+  font-size: 13px;
+  color: var(--ink-muted);
+  margin: 0 0 14px !important;
+}
+.zones-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: 78px 1fr;
+  gap: 8px 14px;
+  align-items: center;
+}
+
+.zone-chip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 30px;
+  padding: 0 10px;
+  border-radius: 6px;
+  font-size: 12.5px;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  font-variant-numeric: tabular-nums;
+}
+.zone-text {
+  font-size: 13.5px;
+  line-height: 1.4;
+  color: var(--ink-soft);
+}
+.zone-text strong { color: var(--ink); }
+
+.zone-red    { background: var(--zone-red);    color: #fff; }
+.zone-yellow { background: var(--zone-yellow); color: #1a1a1a; }
+.zone-blue   { background: var(--zone-blue);   color: #fff; }
+.zone-green  { background: var(--zone-green);  color: #1a1a1a; }
+
+/* --- Products section --- */
+
+.products-section {
+  margin-top: 16px;
+}
+.products-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+.products-header h2 {
+  margin: 0;
+  font-size: 18px;
+}
+.link-btn {
+  background: none;
+  border: none;
+  font-size: 12px;
+  color: var(--ink-muted);
+  cursor: pointer;
+  padding: 4px 8px;
+  font-family: inherit;
+  text-decoration: underline;
+}
+.link-btn:hover { color: var(--danger); }
+
+/* --- Product card --- */
+
+#products {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.product-card {
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  padding: 16px;
+  background: #fff;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--rule);
+}
+.product-num {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+.delete-btn {
+  background: none;
+  border: 1px solid var(--rule);
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  font-size: 18px;
+  line-height: 1;
+  color: var(--ink-muted);
+  cursor: pointer;
+  font-family: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+}
+.delete-btn:hover {
+  border-color: var(--danger);
+  color: var(--danger);
+  background: #fff5f5;
+}
+
+/* --- Input grid --- */
+
+.inputs-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+.input-row label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink);
+  margin-bottom: 5px;
+  line-height: 1.2;
+}
+.label-text { flex-shrink: 0; }
+
+.opt, .req {
+  font-size: 10.5px;
+  font-weight: 500;
+  text-transform: lowercase;
+  margin-left: auto;
+  padding: 1px 6px;
+  border-radius: 3px;
+}
+.opt {
+  color: var(--ink-muted);
+  background: var(--surface-2);
+}
+.req {
+  color: var(--ink);
+  background: #f0e6d0;
+}
+
+.input-wrap {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  border: 1px solid var(--input-border);
+  border-radius: 6px;
+  background: var(--input-bg);
+  overflow: hidden;
+  transition: border-color 0.15s ease;
+}
+.input-wrap:focus-within {
+  border-color: var(--ink);
+}
+
+.input-row input[type="text"],
+.input-row input[type="number"] {
+  flex: 1;
+  border: none;
+  background: transparent;
+  padding: 10px 12px;
+  font-size: 16px;
+  font-family: inherit;
+  color: var(--ink);
+  width: 100%;
+  outline: none;
+  -moz-appearance: textfield;
+}
+.input-row input[type="number"]::-webkit-outer-spin-button,
+.input-row input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Inputs sem wrapper (item, qtde) precisam de borda direta */
+.input-row[data-field="item"] input,
+.input-row[data-field="qtde"] input {
+  border: 1px solid var(--input-border);
+  border-radius: 6px;
+  background: var(--input-bg);
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+.input-row[data-field="item"] input:focus,
+.input-row[data-field="qtde"] input:focus {
+  border-color: var(--ink);
+}
+
+.prefix, .suffix {
+  background: var(--surface);
+  color: var(--ink-muted);
+  font-size: 14px;
+  font-weight: 500;
+  padding: 0 12px;
+  display: flex;
+  align-items: center;
+  border-right: 1px solid var(--input-border);
+  user-select: none;
+}
+.suffix {
+  border-right: none;
+  border-left: 1px solid var(--input-border);
+}
+
+/* Required em vermelho quando vazio E tocado */
+.input-row.required.invalid .input-wrap {
+  border-color: var(--danger);
+}
+
+/* Tip button */
+.tip-btn {
+  background: var(--surface-2);
+  border: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--ink-muted);
+  cursor: pointer;
+  font-family: inherit;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: all 0.15s ease;
+}
+.tip-btn:hover {
+  background: var(--ink);
+  color: #fff;
+}
+
+/* --- Tooltip popover --- */
+
+.tooltip {
+  position: fixed;
+  z-index: 1000;
+  max-width: 280px;
+  background: var(--ink);
+  color: #fff;
+  padding: 12px 32px 12px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  line-height: 1.45;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+  display: none;
+}
+.tooltip.is-open { display: block; }
+.tooltip-content { padding-right: 0; }
+.tooltip-close {
+  position: absolute;
+  top: 4px;
+  right: 6px;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 4px 8px;
+  font-family: inherit;
+}
+
+/* --- Results --- */
+
+.results {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid var(--rule);
+}
+
+.result-box {
+  background: var(--surface);
+  border-radius: 8px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-height: 72px;
+}
+.result-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+.result-value {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.2;
+}
+.result-hint {
+  font-size: 10.5px;
+  color: var(--ink-muted);
+  margin-top: 2px;
+}
+.result-zone {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-top: 2px;
+  opacity: 0.95;
+}
+
+/* Margem com cor da zona */
+.result-margem[data-zone="red"]    { background: var(--zone-red); }
+.result-margem[data-zone="yellow"] { background: var(--zone-yellow); }
+.result-margem[data-zone="blue"]   { background: var(--zone-blue); }
+.result-margem[data-zone="green"]  { background: var(--zone-green); }
+
+/* Texto branco em vermelho e azul */
+.result-margem[data-zone="red"] .result-label,
+.result-margem[data-zone="red"] .result-value,
+.result-margem[data-zone="red"] .result-zone,
+.result-margem[data-zone="blue"] .result-label,
+.result-margem[data-zone="blue"] .result-value,
+.result-margem[data-zone="blue"] .result-zone {
+  color: #fff;
+}
+
+/* Texto escuro em amarelo e verde limão (contraste) */
+.result-margem[data-zone="yellow"] .result-label,
+.result-margem[data-zone="yellow"] .result-value,
+.result-margem[data-zone="yellow"] .result-zone,
+.result-margem[data-zone="green"] .result-label,
+.result-margem[data-zone="green"] .result-value,
+.result-margem[data-zone="green"] .result-zone {
+  color: #1a1a1a;
+}
+
+/* Lucro negativo */
+.result-lucro.is-negative .result-value {
+  color: var(--danger);
+}
+
+/* --- Summary (prévia dos valores) --- */
+
+.summary {
+  margin-top: 16px;
+  padding: 14px 16px;
+  background: var(--surface);
+  border-radius: 8px;
+  border: 1px solid var(--rule);
+}
+.summary-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin-bottom: 8px;
+}
+.summary-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 4px 16px;
+  font-size: 13px;
+}
+.summary-list li {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 4px 0;
+  border-bottom: 1px dashed #e9e9e8;
+}
+.summary-list li:last-child { border-bottom: none; }
+.summary-list .sum-label {
+  color: var(--ink-muted);
+}
+.summary-list .sum-value {
+  color: var(--ink);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+.summary-list .sum-deduct .sum-value {
+  color: var(--ink-soft);
+}
+.summary-list .sum-final {
+  grid-column: 1 / -1;
+  margin-top: 6px;
+  padding-top: 10px;
+  border-top: 1px solid var(--rule);
+  border-bottom: none !important;
+  font-size: 15px;
+}
+.summary-list .sum-final .sum-label,
+.summary-list .sum-final .sum-value {
+  color: var(--ink);
+  font-weight: 700;
+}
+
+/* --- Add product button --- */
+
+.add-product-btn {
+  width: 100%;
+  margin-top: 16px;
+  background: #fff;
+  border: 1.5px dashed var(--input-border);
+  border-radius: 10px;
+  padding: 16px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink-muted);
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.15s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.add-product-btn span {
+  font-size: 20px;
+  line-height: 1;
+}
+.add-product-btn:hover {
+  border-color: var(--ink);
+  color: var(--ink);
+  background: var(--surface);
+}
+
+/* --- Footer --- */
+
+.calc-footer {
+  margin-top: 56px;
+  padding-top: 22px;
+  border-top: 1px solid var(--rule);
+  text-align: center;
+}
+.calc-footer p {
+  margin: 0 0 4px;
+  font-size: 13px;
+  color: var(--ink-muted);
+}
+.footer-credits {
+  font-size: 11.5px !important;
+  margin-top: 6px !important;
+}
+
+/* --- Tablet & desktop (640px+) --- */
+
+@media (min-width: 640px) {
+  .calc-page {
+    padding: 48px 28px 120px;
+  }
+  .calc-hero h1 {
+    font-size: 32px;
+  }
+  .calc-hero .lede {
+    font-size: 17px;
+  }
+  .inputs-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 14px 16px;
+  }
+  .results {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+  }
+  .product-card {
+    padding: 22px 24px;
+  }
+  .summary-list {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* --- Desktop largo (900px+) --- */
+
+@media (min-width: 900px) {
+  .result-value {
+    font-size: 22px;
+  }
+}

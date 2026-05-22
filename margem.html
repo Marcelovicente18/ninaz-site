@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#ffffff" />
+
+  <title>Calculadora de Precificação Shopee · Operação Leve</title>
+  <meta name="description" content="Calculadora gratuita de margem real, ROAS base e zona de risco pra sellers de Shopee. Sem cadastro, mobile-first, criada por Marcelo Ninaz." />
+  <meta name="author" content="Marcelo Ninaz" />
+
+  <meta property="og:title" content="Calculadora de Precificação Shopee · Operação Leve" />
+  <meta property="og:description" content="Margem real, ROAS base e zona de risco do seu produto Shopee em segundos. Gratuito, sem cadastro." />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="pt_BR" />
+
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="margem.css" />
+</head>
+<body>
+  <main class="calc-page">
+
+    <header class="calc-hero">
+      <a href="index.html" class="back-link">← Voltar pra carta</a>
+      <h1>Calculadora de Precificação Shopee</h1>
+      <p class="lede">
+        Cole os números do seu produto e veja a <strong>margem real</strong>,
+        o <strong>ROAS base</strong> e a <strong>zona de risco</strong>.
+        Gratuito, sem cadastro, salva no seu navegador.
+      </p>
+    </header>
+
+    <section class="zones-legend">
+      <h2>Zonas de margem</h2>
+      <p class="zones-sub">A cor da margem te diz onde seu produto está parado:</p>
+      <div class="zones-list">
+        <span class="zone-chip zone-red">&lt; 16%</span>
+        <span class="zone-text"><strong>Sobrevivência.</strong> A operação consome o lucro. Qualquer susto fecha o caixa.</span>
+
+        <span class="zone-chip zone-yellow">16–20%</span>
+        <span class="zone-text"><strong>Instável.</strong> Sobra pouco. Anúncio mal calibrado já zera.</span>
+
+        <span class="zone-chip zone-blue">21–29%</span>
+        <span class="zone-text"><strong>Estrutural.</strong> Você tem controle. Dá pra escalar com critério.</span>
+
+        <span class="zone-chip zone-green">30%+</span>
+        <span class="zone-text"><strong>Escala segura.</strong> Margem pra crescer com consciência.</span>
+      </div>
+    </section>
+
+    <section class="products-section">
+      <div class="products-header">
+        <h2>Seus produtos</h2>
+        <button type="button" id="reset-all" class="link-btn" title="Apagar tudo">Limpar tudo</button>
+      </div>
+      <div id="products"></div>
+      <button type="button" id="add-product" class="add-product-btn">
+        <span>+</span> Adicionar produto
+      </button>
+    </section>
+
+    <footer class="calc-footer">
+      <p><a href="index.html">Operação Leve</a> · Programa de 60 dias pra sellers de marketplace</p>
+      <p class="footer-credits">Calculadora gratuita por Marcelo Ninaz · @ninaz.marc</p>
+    </footer>
+
+  </main>
+
+  <!-- Tooltip popover (movido pelo JS) -->
+  <div id="tooltip" class="tooltip" role="dialog" aria-hidden="true">
+    <div class="tooltip-content"></div>
+    <button type="button" class="tooltip-close" aria-label="Fechar">×</button>
+  </div>
+
+  <!-- Floating Instagram (consistência com a carta) -->
+  <a class="instagram-float" href="https://www.instagram.com/ninaz.marc/" target="_blank" rel="noopener" aria-label="Me chamar no Instagram">
+    <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor" aria-hidden="true">
+      <path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23a3.71 3.71 0 0 1-.9 1.38 3.71 3.71 0 0 1-1.38.9c-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.71 3.71 0 0 1-1.38-.9 3.71 3.71 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23-.06-1.27-.07-1.65-.07-4.85s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16zm0 5.84a4 4 0 1 0 0 8 4 4 0 0 0 0-8zm5.2-.6a.93.93 0 1 1 0 1.86.93.93 0 0 1 0-1.86zM12 9.84a2.16 2.16 0 1 1 0 4.32 2.16 2.16 0 0 1 0-4.32z"/>
+    </svg>
+  </a>
+
+  <!-- Template do produto (clonado pelo JS) -->
+  <template id="product-template">
+    <article class="product-card" data-product-id="">
+      <div class="card-header">
+        <span class="product-num">Produto 1</span>
+        <button type="button" class="delete-btn" aria-label="Remover produto" title="Remover">×</button>
+      </div>
+
+      <div class="inputs-grid">
+        <div class="input-row" data-field="item">
+          <label>
+            <span class="label-text">Item</span>
+            <small class="opt">opcional</small>
+          </label>
+          <input type="text" data-name="item" placeholder="Nome do produto" autocomplete="off" />
+        </div>
+
+        <div class="input-row" data-field="qtde">
+          <label>
+            <span class="label-text">QTDE</span>
+            <small class="opt">opcional</small>
+          </label>
+          <input type="number" data-name="qtde" inputmode="numeric" min="1" step="1" placeholder="1" />
+        </div>
+
+        <div class="input-row required currency" data-field="custo">
+          <label>
+            <span class="label-text">Custo do produto</span>
+            <button type="button" class="tip-btn" data-tip="Quanto você paga pelo produto (preço do fornecedor). Sem incluir frete, embalagem, taxas — só o custo bruto do que você compra.">?</button>
+            <small class="req">obrigatório</small>
+          </label>
+          <div class="input-wrap"><span class="prefix">R$</span><input type="text" data-name="custo" data-mask="currency" inputmode="decimal" placeholder="0,00" /></div>
+        </div>
+
+        <div class="input-row required currency" data-field="venda">
+          <label>
+            <span class="label-text">Valor de venda</span>
+            <button type="button" class="tip-btn" data-tip="Preço de venda do produto no marketplace, já com o markup que você decidiu.">?</button>
+            <small class="req">obrigatório</small>
+          </label>
+          <div class="input-wrap"><span class="prefix">R$</span><input type="text" data-name="venda" data-mask="currency" inputmode="decimal" placeholder="0,00" /></div>
+        </div>
+
+        <div class="input-row required percent" data-field="comissaoPct">
+          <label>
+            <span class="label-text">Comissão</span>
+            <button type="button" class="tip-btn" data-tip="% que a Shopee cobra sobre a venda. Mall padrão: 20%. Programa Frete Grátis: 14% a 22% dependendo do tier. Sua categoria pode variar — confere no painel.">?</button>
+            <small class="req">obrigatório</small>
+          </label>
+          <div class="input-wrap"><input type="text" data-name="comissaoPct" data-mask="percent" inputmode="decimal" placeholder="20" value="20" /><span class="suffix">%</span></div>
+        </div>
+
+        <div class="input-row required currency" data-field="taxa">
+          <label>
+            <span class="label-text">Taxa fixa</span>
+            <button type="button" class="tip-btn" data-tip="Taxa fixa que a Shopee cobra por pedido. Atualmente R$ 4,00 para vendas a partir de R$ 8.">?</button>
+            <small class="req">obrigatório</small>
+          </label>
+          <div class="input-wrap"><span class="prefix">R$</span><input type="text" data-name="taxa" data-mask="currency" inputmode="decimal" placeholder="4,00" value="4,00" /></div>
+        </div>
+
+        <div class="input-row required percent" data-field="impostoPct">
+          <label>
+            <span class="label-text">Imposto</span>
+            <button type="button" class="tip-btn" data-tip="Sua alíquota de imposto sobre a venda. Simples Nacional varia conforme o anexo e faturamento; MEI tem alíquota fixa. Se não sabe, fala com seu contador.">?</button>
+            <small class="req">obrigatório</small>
+          </label>
+          <div class="input-wrap"><input type="text" data-name="impostoPct" data-mask="percent" inputmode="decimal" placeholder="6" /><span class="suffix">%</span></div>
+        </div>
+
+        <div class="input-row currency" data-field="marketing">
+          <label>
+            <span class="label-text">Marketing</span>
+            <button type="button" class="tip-btn" data-tip="Valor do brinde / lembrança que você inclui no pacote (bala, cartãozinho, amostra, mimo). Não confunda com anúncios — isso é o custo por unidade do que vai dentro do envelope.">?</button>
+            <small class="opt">opcional</small>
+          </label>
+          <div class="input-wrap"><span class="prefix">R$</span><input type="text" data-name="marketing" data-mask="currency" inputmode="decimal" placeholder="0,00" /></div>
+        </div>
+
+        <div class="input-row required currency" data-field="custoVar">
+          <label>
+            <span class="label-text">Custo variável</span>
+            <button type="button" class="tip-btn" data-tip="Tudo que você gasta pra deixar o pacote pronto pra despachar: envelope, etiqueta, plástico, papelão, fita, sacolinha. Por unidade.">?</button>
+            <small class="req">obrigatório</small>
+          </label>
+          <div class="input-wrap"><span class="prefix">R$</span><input type="text" data-name="custoVar" data-mask="currency" inputmode="decimal" placeholder="0,00" /></div>
+        </div>
+
+        <div class="input-row currency" data-field="custoFixo">
+          <label>
+            <span class="label-text">Custo fixo</span>
+            <button type="button" class="tip-btn" data-tip="Diluição de custos fixos por unidade: aluguel, água, luz, internet, telefone, salário, mensalidades. Você pega o custo fixo mensal total e divide pela média de unidades vendidas no mês.">?</button>
+            <small class="opt">opcional</small>
+          </label>
+          <div class="input-wrap"><span class="prefix">R$</span><input type="text" data-name="custoFixo" data-mask="currency" inputmode="decimal" placeholder="0,00" /></div>
+        </div>
+      </div>
+
+      <div class="results">
+        <div class="result-box result-lucro">
+          <span class="result-label">Lucro líquido</span>
+          <span class="result-value" data-result="lucro">—</span>
+        </div>
+        <div class="result-box result-margem" data-zone="">
+          <span class="result-label">Margem</span>
+          <span class="result-value" data-result="margem">—</span>
+          <span class="result-zone" data-result="zone">—</span>
+        </div>
+        <div class="result-box result-roas">
+          <span class="result-label">ROAS base</span>
+          <span class="result-value" data-result="roasBase">—</span>
+          <span class="result-hint">Venda ÷ Lucro</span>
+        </div>
+        <div class="result-box result-roas-ideal">
+          <span class="result-label">ROAS ideal</span>
+          <span class="result-value" data-result="roasIdeal">—</span>
+          <span class="result-hint">Base + 10</span>
+        </div>
+      </div>
+
+      <div class="summary">
+        <div class="summary-title" data-result="summaryTitle">Produto 1</div>
+        <ul class="summary-list" data-result="summaryList"></ul>
+      </div>
+    </article>
+  </template>
+
+  <script src="margem.js"></script>
+</body>
+</html>
