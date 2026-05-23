@@ -381,6 +381,21 @@
     last.scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
 
+  // Exportar PDF (usa diálogo de impressão do sistema)
+  const exportBtn = document.getElementById('export-pdf');
+  if (exportBtn) {
+    exportBtn.addEventListener('click', () => {
+      const dateEl = document.getElementById('print-date');
+      if (dateEl) {
+        const now = new Date();
+        dateEl.textContent = 'Gerado em ' + now.toLocaleDateString('pt-BR', {
+          day: '2-digit', month: 'long', year: 'numeric'
+        });
+      }
+      window.print();
+    });
+  }
+
   resetBtn.addEventListener('click', () => {
     if (!confirm('Apagar todos os produtos salvos?')) return;
     productsContainer.innerHTML = '';

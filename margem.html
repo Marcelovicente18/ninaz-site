@@ -19,6 +19,15 @@
   <link rel="stylesheet" href="margem.css" />
 </head>
 <body>
+  <!-- Cabeçalho que só aparece no print -->
+  <div class="print-header" aria-hidden="true">
+    <div class="print-brand">◉ ΝΙΝΔZ</div>
+    <div class="print-meta">
+      <div class="print-title">Calculadora de Precificação Shopee</div>
+      <div class="print-date" id="print-date"></div>
+    </div>
+  </div>
+
   <main class="calc-page">
 
     <header class="calc-hero">
@@ -52,7 +61,17 @@
     <section class="products-section">
       <div class="products-header">
         <h2>Seus produtos</h2>
-        <button type="button" id="reset-all" class="link-btn" title="Apagar tudo">Limpar tudo</button>
+        <div class="products-actions">
+          <button type="button" id="export-pdf" class="action-btn" title="Salvar como PDF">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="7 10 12 15 17 10"/>
+              <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+            Exportar PDF
+          </button>
+          <button type="button" id="reset-all" class="link-btn" title="Apagar tudo">Limpar tudo</button>
+        </div>
       </div>
       <div id="products"></div>
       <button type="button" id="add-product" class="add-product-btn">

@@ -112,6 +112,29 @@
   margin: 0;
   font-size: 18px;
 }
+.products-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--ink);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.15s ease;
+}
+.action-btn:hover { background: #000; }
+.action-btn svg { flex-shrink: 0; }
+
 .link-btn {
   background: none;
   border: none;
@@ -123,6 +146,9 @@
   text-decoration: underline;
 }
 .link-btn:hover { color: var(--danger); }
+
+/* Cabeçalho de impressão (escondido na tela) */
+.print-header { display: none; }
 
 /* --- Product card --- */
 
@@ -556,4 +582,157 @@
   .result-value {
     font-size: 22px;
   }
+}
+
+/* --- Print / Salvar como PDF --- */
+
+@media print {
+  @page { size: A4; margin: 12mm 14mm; }
+
+  body {
+    background: #fff !important;
+    font-size: 10pt;
+    line-height: 1.4;
+  }
+
+  /* Esconde tudo que não interessa no PDF */
+  .calc-hero,
+  .back-link,
+  .products-header,
+  .products-actions,
+  .add-product-btn,
+  .calc-footer,
+  .instagram-float,
+  .tooltip,
+  .tip-btn,
+  .delete-btn,
+  .card-header .delete-btn { display: none !important; }
+
+  /* Cabeçalho de impressão visível só no PDF */
+  .print-header {
+    display: flex !important;
+    align-items: baseline;
+    justify-content: space-between;
+    border-bottom: 2px solid #111;
+    padding-bottom: 8px;
+    margin-bottom: 14px;
+  }
+  .print-brand {
+    font-size: 14pt;
+    font-weight: 700;
+  }
+  .print-meta {
+    text-align: right;
+    font-size: 9.5pt;
+  }
+  .print-title { font-weight: 600; }
+  .print-date { color: #666; margin-top: 2px; }
+
+  .calc-page {
+    padding: 0;
+    max-width: none;
+  }
+
+  /* Zonas de margem mais compactas */
+  .zones-legend {
+    background: #fafaf9 !important;
+    border: 1px solid #ddd !important;
+    padding: 10px 12px !important;
+    margin-bottom: 14px !important;
+    page-break-inside: avoid;
+  }
+  .zones-legend h2 { font-size: 11pt !important; margin-bottom: 2px !important; }
+  .zones-sub { font-size: 9pt !important; margin-bottom: 8px !important; }
+  .zones-list { gap: 4px 12px !important; grid-template-columns: 82px 1fr !important; }
+  .zone-chip { height: 22px !important; font-size: 9pt !important; padding: 0 6px !important; white-space: nowrap; }
+  .zone-text { font-size: 9.5pt !important; line-height: 1.35 !important; }
+
+  /* Garante cor de fundo nos chips e na margem (Chrome/Safari) */
+  .zone-chip, .result-margem[data-zone] {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* Card de produto compacto */
+  .product-card {
+    border: 1px solid #ccc !important;
+    border-radius: 8px;
+    padding: 12px 14px !important;
+    page-break-inside: avoid;
+    margin-bottom: 12px;
+  }
+  .card-header {
+    border-bottom: 1px solid #eee;
+    padding-bottom: 6px;
+    margin-bottom: 10px;
+  }
+  .product-num { font-size: 9pt !important; }
+
+  /* Inputs viram texto plano legível */
+  .inputs-grid {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 6px 14px;
+  }
+  .input-row .opt, .input-row .req { display: none; }
+  .input-row label {
+    font-size: 8.5pt !important;
+    margin-bottom: 2px !important;
+    color: #666 !important;
+  }
+  .input-wrap, .input-row[data-field="item"] input, .input-row[data-field="qtde"] input {
+    border: none !important;
+    border-bottom: 1px solid #ccc !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+  }
+  .prefix, .suffix {
+    background: transparent !important;
+    border: none !important;
+    padding: 0 4px 0 0 !important;
+    font-size: 9pt;
+    color: #666 !important;
+  }
+  .input-row input {
+    padding: 2px 4px !important;
+    font-size: 10pt !important;
+    font-weight: 600;
+  }
+
+  /* Resultados compactos */
+  .results {
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 6px !important;
+    margin-top: 10px !important;
+    padding-top: 10px !important;
+  }
+  .result-box {
+    padding: 8px 10px !important;
+    min-height: 0 !important;
+    border: 1px solid #ddd;
+    background: #fafaf9 !important;
+  }
+  .result-label { font-size: 8pt !important; }
+  .result-value { font-size: 13pt !important; }
+  .result-hint, .result-zone { font-size: 8pt !important; }
+
+  /* Margem mantém a cor da zona */
+  .result-margem[data-zone="red"]    { background: #e10600 !important; border-color: #e10600 !important; }
+  .result-margem[data-zone="yellow"] { background: #ffd400 !important; border-color: #ffd400 !important; }
+  .result-margem[data-zone="blue"]   { background: #0a2a6e !important; border-color: #0a2a6e !important; }
+  .result-margem[data-zone="green"]  { background: #a8e000 !important; border-color: #a8e000 !important; }
+
+  /* Resumo / prévia */
+  .summary {
+    background: #fafaf9 !important;
+    border: 1px solid #e0e0e0 !important;
+    padding: 10px 12px !important;
+    margin-top: 10px !important;
+  }
+  .summary-title { font-size: 9pt !important; margin-bottom: 4px !important; }
+  .summary-list { grid-template-columns: 1fr 1fr !important; font-size: 9.5pt !important; gap: 2px 14px !important; }
+  .summary-list li { padding: 3px 0 !important; }
+  .summary-list .sum-final { font-size: 10.5pt !important; padding-top: 6px !important; margin-top: 4px !important; }
+
+  /* Remove hovers e shadows */
+  * { box-shadow: none !important; }
 }
