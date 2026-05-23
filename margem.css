@@ -530,6 +530,29 @@
   background: var(--surface);
 }
 
+/* Botão grande de export no fim da planilha */
+.export-pdf-btn-bottom {
+  width: 100%;
+  margin-top: 12px;
+  background: var(--ink);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 16px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: background 0.15s ease, transform 0.12s ease;
+}
+.export-pdf-btn-bottom:hover { background: #000; }
+.export-pdf-btn-bottom:active { transform: scale(0.99); }
+.export-pdf-btn-bottom svg { flex-shrink: 0; }
+
 /* --- Footer --- */
 
 .calc-footer {
@@ -601,6 +624,7 @@
   .products-header,
   .products-actions,
   .add-product-btn,
+  .export-pdf-btn-bottom,
   .calc-footer,
   .instagram-float,
   .tooltip,
