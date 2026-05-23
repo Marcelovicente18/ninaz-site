@@ -126,6 +126,45 @@
   color: var(--ink) !important;
 }
 
+/* --- Botões WhatsApp (verde) --- */
+
+.cta-whatsapp {
+  background: #25D366 !important;
+  color: #fff !important;
+}
+.cta-whatsapp:hover { background: #1ebe57 !important; }
+
+.whatsapp-float {
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+  width: 56px;
+  height: 56px;
+  background: #25D366;
+  color: #ffffff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 14px rgba(37, 211, 102, 0.4);
+  z-index: 100;
+  transition: transform 0.18s ease, background 0.18s ease;
+  text-decoration: none !important;
+}
+.whatsapp-float:hover {
+  background: #1ebe57;
+  transform: scale(1.05);
+}
+
+@media (min-width: 640px) {
+  .whatsapp-float {
+    width: 60px;
+    height: 60px;
+    bottom: 24px;
+    right: 24px;
+  }
+}
+
 /* --- Tablet & Desktop (acima de 640px) --- */
 
 @media (min-width: 640px) {
