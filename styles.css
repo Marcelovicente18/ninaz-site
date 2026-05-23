@@ -239,9 +239,7 @@ blockquote {
   border-top: 1px solid var(--rule);
 }
 
-.format:last-of-type {
-  border-bottom: 1px solid var(--rule);
-}
+/* .format:last-of-type sem border-bottom — o .block + .block seguinte já desenha o divisor */
 
 .format-tag {
   font-size: 11px;
